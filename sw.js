@@ -1,7 +1,7 @@
 // DevToolkit Service Worker
 // Enhanced PWA functionality with caching and offline support
 
-const CACHE_NAME = 'devtoolkit-v2.0';
+const CACHE_NAME = 'devtoolkit-v2.1';
 const OFFLINE_URL = '/offline.html';
 
 // Resources to cache for offline functionality
@@ -14,6 +14,12 @@ const STATIC_RESOURCES = [
   '/tools/word-counter/',
   '/tools/word-counter/index.html',
   '/tools/word-counter/script.js',
+  '/tools/lorem-ipsum-generator/',
+  '/tools/lorem-ipsum-generator/index.html',
+  '/tools/lorem-ipsum-generator/script.js',
+  '/tools/uuid-generator/',
+  '/tools/uuid-generator/index.html',
+  '/tools/uuid-generator/script.js',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
   'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'
 ];

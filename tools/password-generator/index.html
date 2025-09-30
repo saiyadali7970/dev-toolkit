@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">Password Generator</h1>
+            <p class="tool-subtitle">
+                Create strong, secure, and random passwords tailored to your needs.
+            </p>
+        </div>
+
+        <!-- Settings Section -->
+        <div class="input-grid">
+            <div class="text-input-section">
+                <div class="input-label">
+                    <i class="fas fa-cog"></i>
+                    Customize Your Password
+                </div>
+
+                <!-- Password Length Setting -->
+                <div class="setting">
+                    <label for="length-slider">Password Length (4-25)</label>
+                    <div class="length-control">
+                        <input type="range" id="length-slider" min="4" max="25" value="4">
+                        <span id="length-value">4</span>
+                    </div>
+                </div>
+
+                <!-- Character Options -->
+                <div class="setting">
+                    <label>Character Options</label>
+                    <div class="options-grid">
+                        <label class="option">
+                            <input type="checkbox" id="include-uppercase" checked>
+                            <span class="custom-checkbox"></span>
+                            <span>Uppercase (A-Z)</span>
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" id="include-numbers" checked>
+                            <span class="custom-checkbox"></span>
+                            <span>Numbers (0-9)</span>
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" id="include-symbols" checked>
+                            <span class="custom-checkbox"></span>
+                            <span>Symbols (!@#$)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Generate Button -->
+                <center><button id="generate-btn" class="btn btn-secondary">
+                        <i class="fas fa-key"></i>
+                        Generate Password
+                    </button>
+                </center>
+            </div>
+        </div>
+        <!-- Result Display Section -->
+        <div class="stats-grid" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <div class="stat-label">Generated Password</div>
+                <div class="password-container">
+                    <div class="stat-password" id="generated-password-display">
+                    </div>
+                </div>
+                <button id="copy-btn" class="copy-btn" disabled>
+                    <i class="fas fa-copy"></i>
+                    Copy to Clipboard
+                </button><br><br>
+            </div>
+        </div>
+        <!-- Feature Highlight -->
+        <div class="feature-highlight">
+            <h4>✨ Customizable & Secure Passwords</h4>
+            <p>Create the perfect password for your needs. Use the slider to set the length and choose from character
+                options like uppercase, numbers, and symbols for enhanced security.
+            </p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

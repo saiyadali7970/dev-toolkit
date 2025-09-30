@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Previewer - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        .tool-container {
+            max-width: 100%;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tool-header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .tool-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .action-btn.copied {
+            background: #00d084;
+            color: white;
+            border-color: #00d084;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .editor-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .editor-pane, .preview-pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .editor-pane {
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pane-header {
+            background: var(--bg-secondary);
+            padding: 0.75rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .pane-header i {
+            color: var(--primary-color);
+        }
+
+        #markdown-input {
+            flex: 1;
+            background: var(--bg-primary);
+            border: none;
+            padding: 1.5rem;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            resize: none;
+            line-height: 1.6;
+            overflow-y: auto;
+        }
+
+        #markdown-input:focus {
+            outline: none;
+        }
+
+        #markdown-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        #preview-content {
+            flex: 1;
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            overflow-y: auto;
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        /* Markdown Preview Styles */
+        #preview-content h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        #preview-content h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary-color);
+        }
+
+        #preview-content h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #preview-content h4, #preview-content h5, #preview-content h6 {
+            font-weight: 600;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #preview-content p {
+            margin-bottom: 1rem;
+        }
+
+        #preview-content a {
+            color: var(--primary-color);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        #preview-content a:hover {
+            border-bottom-color: var(--primary-color);
+        }
+
+        #preview-content code {
+            background: rgba(255, 107, 53, 0.1);
+            color: var(--primary-color);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+        }
+
+        #preview-content pre {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        #preview-content pre code {
+            background: none;
+            color: var(--text-primary);
+            padding: 0;
+        }
+
+        #preview-content blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        #preview-content ul, #preview-content ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        #preview-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        #preview-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        #preview-content table th {
+            background: var(--bg-secondary);
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #preview-content table td {
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #preview-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius-md);
+            margin: 1rem 0;
+        }
+
+        #preview-content hr {
+            border: none;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            margin: 2rem 0;
+        }
+
+        #preview-content strong {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        #preview-content em {
+            font-style: italic;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .editor-container {
+                flex-direction: column;
+            }
+
+            .editor-pane {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .tool-header {
+                padding: 0.75rem 1rem;
+            }
+
+            .tool-title {
+                font-size: 1.2rem;
+            }
+
+            .header-actions {
+                flex-wrap: wrap;
+            }
+
+            .action-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <div class="header-left">
+                <a href="../../index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    Back
+                </a>
+                <h1 class="tool-title">Markdown Previewer</h1>
+            </div>
+            <div class="header-actions">
+                <button class="action-btn" id="clear-btn">
+                    <i class="fas fa-eraser"></i>
+                    Clear
+                </button>
+                <button class="action-btn" id="copy-md-btn">
+                    <i class="fas fa-copy"></i>
+                    Copy MD
+                </button>
+                <button class="action-btn" id="copy-html-btn">
+                    <i class="fas fa-code"></i>
+                    Copy HTML
+                </button>
+                <button class="action-btn" id="download-btn">
+                    <i class="fas fa-download"></i>
+                    Download
+                </button>
+            </div>
+        </div>
+
+        <!-- Editor Container -->
+        <div class="editor-container">
+            <!-- Editor Pane -->
+            <div class="editor-pane">
+                <div class="pane-header">
+                    <i class="fas fa-edit"></i>
+                    Markdown Editor
+                </div>
+                <textarea id="markdown-input" placeholder="# Welcome to Markdown Previewer
+
+Start typing your markdown here...
+
+## Features
+- **Bold** and *italic* text
+- Lists and links
+- Code blocks
+- Tables and more!
+
+Try it out!"></textarea>
+            </div>
+
+            <!-- Preview Pane -->
+            <div class="preview-pane">
+                <div class="pane-header">
+                    <i class="fas fa-eye"></i>
+                    Live Preview
+                </div>
+                <div id="preview-content">
+                    <div class="empty-state">
+                        <i class="fas fa-file-alt"></i>
+                        <p>Start typing to see the preview...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

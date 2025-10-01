@@ -128,7 +128,7 @@
             </p>
             <div class="hero-stats">
                 <div class="stat">
-                    <span class="stat-number" data-target="8">0</span>
+                    <span class="stat-number" data-target="11">0</span>
                     <span class="stat-label">Tools Available</span>
                 </div>
                 <div class="stat">
@@ -170,7 +170,7 @@
                     <div class="search-suggestions" id="searchSuggestions"></div>
                 </div>
                 <div class="search-stats" id="searchStats">
-                    <span id="resultCount">1</span> tools found
+                    <span id="resultCount">11</span> tools found
                 </div>
             </div>
 
@@ -194,7 +194,7 @@
             </div>
 
             <div id="tools-grid" class="tools-grid">
-                <!-- Featured Tool - Word Counter -->
+                <!-- Word Counter -->
                 <a href="tools/word-counter/index.html" class="tool-card" data-category="text" data-featured="true">
                     <div class="tool-icon">
                         <i class="fas fa-font"></i>
@@ -214,6 +214,7 @@
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </a>
+
                 <!-- Lorem Ipsum Generator -->
                 <a href="tools/lorem-ipsum-generator/index.html" class="tool-card" data-category="text">
                     <div class="tool-icon">
@@ -222,11 +223,30 @@
                     <div class="tool-content">
                         <h3 class="tool-title">Lorem Ipsum Generator</h3>
                         <p class="tool-description">Generate customizable placeholder text by words or paragraphs for
-                            your design and
-                            development projects. Perfect for mockups and prototyping.</p>
+                            your design and development projects. Perfect for mockups and prototyping.</p>
                         <div class="tool-tags">
                             <span class="tag">Text</span>
                             <span class="tag">Generator</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
+                <!-- Markdown Previewer -->
+                <a href="tools/markdown-previewer/index.html" class="tool-card" data-category="code">
+                    <div class="tool-icon">
+                        <i class="fas fa-markdown"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Markdown Previewer</h3>
+                        <p class="tool-description">Write and preview Markdown in real-time with split-view editor.
+                            Export to HTML, MD, or plain text.</p>
+                        <div class="tool-tags">
+                            <span class="tag">Markdown</span>
+                            <span class="tag">Preview</span>
+                            <span class="tag">Editor</span>
                         </div>
                     </div>
                     <div class="tool-arrow">
@@ -253,6 +273,26 @@
                     </div>
                 </div>
 
+                <!-- Timer & Stopwatch -->
+                <a href="tools/timer-stopwatch/index.html" class="tool-card" data-category="utility">
+                    <div class="tool-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Timer & Stopwatch</h3>
+                        <p class="tool-description">Countdown timer and stopwatch with lap tracking, audio alerts, and
+                            keyboard shortcuts.</p>
+                        <div class="tool-tags">
+                            <span class="tag">Timer</span>
+                            <span class="tag">Stopwatch</span>
+                            <span class="tag">Productivity</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+
                 <!-- Color Picker -->
                 <div class="tool-card" data-category="utility">
                     <div class="tool-icon">
@@ -273,22 +313,44 @@
                 </div>
 
                 <!-- Base64 Encoder/Decoder -->
-                <div class="tool-card" data-category="utility">
+                <a href="tools/base64-encoder/index.html" class="tool-card" data-category="utility">
                     <div class="tool-icon">
                         <i class="fas fa-lock"></i>
                     </div>
                     <div class="tool-content">
-                        <h3 class="tool-title">Base64 Encoder</h3>
-                        <p class="tool-description">Encode and decode Base64 strings quickly and securely.</p>
+                        <h3 class="tool-title">Base64 Encoder/Decoder</h3>
+                        <p class="tool-description">Encode text to Base64 or decode Base64 strings. Support for text and
+                            file conversion.</p>
                         <div class="tool-tags">
+                            <span class="tag">Base64</span>
                             <span class="tag">Encode</span>
-                            <span class="tag">Security</span>
+                            <span class="tag">Decode</span>
                         </div>
                     </div>
                     <div class="tool-arrow">
                         <i class="fas fa-arrow-right"></i>
                     </div>
-                </div>
+                </a>
+
+                <!-- URL Encoder/Decoder -->
+                <a href="tools/url-encoder-decoder/index.html" class="tool-card" data-category="utility">
+                    <div class="tool-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">URL Encoder/Decoder</h3>
+                        <p class="tool-description">Encode or decode URLs to ensure proper formatting. Convert special
+                            characters and spaces for safe URL transmission.</p>
+                        <div class="tool-tags">
+                            <span class="tag">URL</span>
+                            <span class="tag">Encode</span>
+                            <span class="tag">Decode</span>
+                        </div>
+                    </div>
+                    <div class="tool-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
 
                 <!-- URL Shortener -->
                 <div class="tool-card" data-category="utility" data-wide="true">
@@ -311,7 +373,7 @@
                 </div>
 
                 <!-- Password Generator -->
-                <a href="tools/password-generator/index.html" class="tool-card" data-category="utility">
+                <div class="tool-card" data-category="utility">
                     <div class="tool-icon">
                         <i class="fas fa-key"></i>
                     </div>
@@ -327,7 +389,7 @@
                     <div class="tool-arrow">
                         <i class="fas fa-arrow-right"></i>
                     </div>
-                </a>
+                </div>
 
                 <!-- QR Code Generator -->
                 <div class="tool-card" data-category="utility">
@@ -361,26 +423,6 @@
                             <span class="tag">UUID</span>
                             <span class="tag">Generator</span>
                             <span class="tag">Security</span>
-                        </div>
-                    </div>
-                    <div class="tool-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </a>
-
-                <!-- Unix Timestamp Converter -->
-                <a href="tools/unix-timestamp-converter/index.html" class="tool-card" data-category="utility">
-                    <div class="tool-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="tool-content">
-                        <h3 class="tool-title">Unix Timestamp Converter</h3>
-                        <p class="tool-description">A simple tool to convert human-readable dates into Unix timestamps
-                            and convert Unix timestamps back into readable date/time.</p>
-                        <div class="tool-tags">
-                            <span class="tag">Time</span>
-                            <span class="tag">Date</span>
-                            <span class="tag">Unix</span>
                         </div>
                     </div>
                     <div class="tool-arrow">

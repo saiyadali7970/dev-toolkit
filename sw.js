@@ -1,7 +1,7 @@
 // DevToolkit Service Worker
 // Enhanced PWA functionality with caching and offline support
 
-const CACHE_NAME = 'devtoolkit-v2.0';
+const CACHE_NAME = 'devtoolkit-v2.3';
 const OFFLINE_URL = '/offline.html';
 
 // Resources to cache for offline functionality
@@ -14,8 +14,28 @@ const STATIC_RESOURCES = [
   '/tools/word-counter/',
   '/tools/word-counter/index.html',
   '/tools/word-counter/script.js',
+  '/tools/lorem-ipsum-generator/',
+  '/tools/lorem-ipsum-generator/index.html',
+  '/tools/lorem-ipsum-generator/script.js',
+  '/tools/uuid-generator/',
+  '/tools/uuid-generator/index.html',
+  '/tools/uuid-generator/script.js',
+  '/tools/markdown-previewer/',
+  '/tools/markdown-previewer/index.html',
+  '/tools/markdown-previewer/script.js',
+  '/tools/url-encoder-decoder/',
+  '/tools/url-encoder-decoder/index.html',
+  '/tools/url-encoder-decoder/script.js',
+  '/tools/timer-stopwatch/',
+  '/tools/timer-stopwatch/index.html',
+  '/tools/timer-stopwatch/script.js',
+  '/tools/image-base64-converter/',
+  '/tools/image-base64-converter/index.html',
+  '/tools/image-base64-converter/script.js',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
-  'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'
+  'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap',
+  'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap',
+  'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap'
 ];
 
 // Install event - cache static resources

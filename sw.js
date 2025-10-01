@@ -1,7 +1,7 @@
 // DevToolkit Service Worker
 // Enhanced PWA functionality with caching and offline support
 
-const CACHE_NAME = 'devtoolkit-v2.2';
+const CACHE_NAME = 'devtoolkit-v2.3';
 const OFFLINE_URL = '/offline.html';
 
 // Resources to cache for offline functionality

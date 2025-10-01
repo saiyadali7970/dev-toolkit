@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unix Timestamp Converter - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">Unix Timestamp Converter</h1>
+            <p class="tool-subtitle">
+                A simple tool to convert human-readable dates into Unix timestamps
+                and convert Unix timestamps back into readable date/time.
+            </p>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-grid">
+            <div class="text-input-section">
+                <div class="input-label">
+                    <i class="fas fa-calendar-days"></i>
+                    Date to Unix Timestamp
+                </div>
+                <input id="datetime-picker" class="text-input" type="text" placeholder="Click to Select Date & Time" />
+            </div>
+
+            <div class="text-input-section">
+                <div class="input-label">
+                    <i class="fas fa-clock"></i>
+                    Unix Timestamp to Date
+                </div>
+                <input id="unix-timestamp-input" class="text-input" type="text" placeholder="Enter Unix timestamp" />
+            </div>
+        </div>
+
+        <!-- Conversion Results -->
+        <div class="stats-grid" id="conversion-results" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="stat-label">Human-Readable Date</div>
+                <div class="stat-number" id="human-date-result">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-label">Unix Timestamp</div>
+                <div class="stat-number" id="unix-timestamp-result">-</div>
+                <button id="copy-btn" class="copy-btn" disabled>
+                    <i class="fas fa-copy"></i>
+                    Copy to Clipboard
+                </button>
+            </div>
+        </div>
+
+        <div class="info-banner">
+            <i class="fas fa-info-circle"></i>
+            <span class="live-unix-info">Shows the Live Unix Timestamp</span>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-satellite-dish"></i>
+                </div>
+                <div class="stat-label">Live Unix Timestamp</div>
+                <div class="stat-number" id="live-unix-timestamp-result">-</div>
+                <button id="copy-btn-live" class="copy-btn" disabled>
+                    <i class="fas fa-copy"></i>
+                    Copy to Clipboard
+                </button><br><br>
+                <div class="stat-label">As of</div>
+                <div class="stat-number" id="live-datetime-result">-</div>
+            </div>
+        </div>
+        <!-- Feature Highlight -->
+        <div class="feature-highlight">
+            <h4>✨ Real-time Time Conversion</h4>
+            <p>Get instant Timestamp conversion as you enter date-time and also see the live Unix Timestamp based on
+                Local UTC.
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

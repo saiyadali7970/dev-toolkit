@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer & Stopwatch - DevToolkit</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .tool-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tool-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .tool-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
+        }
+
+        .back-button:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .mode-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .mode-btn {
+            padding: 0.75rem 2rem;
+            background: var(--bg-secondary);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mode-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--text-primary);
+        }
+
+        .mode-btn.active {
+            background: var(--gradient-primary);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .timer-section,
+        .stopwatch-section {
+            display: none;
+        }
+
+        .timer-section.active,
+        .stopwatch-section.active {
+            display: block;
+        }
+
+        .display-container {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .display-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        .time-display {
+            text-align: center;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+        }
+
+        .timer-inputs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+
+        .timer-input-group {
+            text-align: center;
+        }
+
+        .timer-input-group label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .timer-input-group input {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .timer-input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background: transparent;
+            color: var(--error-color);
+            border: 2px solid var(--error-color);
+        }
+
+        .btn-danger:hover {
+            background: var(--error-color);
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn:disabled:hover {
+            transform: none;
+        }
+
+        .laps-container {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .laps-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .laps-header h3 {
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0;
+        }
+
+        .laps-header i {
+            color: var(--primary-color);
+        }
+
+        .clear-laps-btn {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px solid var(--error-color);
+            border-radius: var(--radius-md);
+            color: var(--error-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .clear-laps-btn:hover {
+            background: var(--error-color);
+            color: white;
+        }
+
+        .laps-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .lap-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .lap-item:hover {
+            border-color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .lap-number {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .lap-time {
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        .lap-diff {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .empty-laps {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 2rem;
+        }
+
+        .progress-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            opacity: 0.3;
+        }
+
+        .progress-ring circle {
+            fill: none;
+            stroke: var(--primary-color);
+            stroke-width: 4;
+            stroke-dasharray: 880;
+            stroke-dashoffset: 880;
+            transition: stroke-dashoffset 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .tool-container {
+                padding: 1rem;
+            }
+
+            .back-button {
+                top: 1rem;
+                left: 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .mode-switcher {
+                flex-direction: column;
+            }
+
+            .mode-btn {
+                width: 100%;
+            }
+
+            .time-display {
+                font-size: clamp(2rem, 10vw, 4rem);
+            }
+
+            .timer-inputs {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+            }
+
+            .timer-input-group input {
+                font-size: 1.2rem;
+                padding: 0.75rem;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .progress-ring {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .laps-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .clear-laps-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="../../index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Tools
+    </a>
+
+    <div class="tool-container">
+        <!-- Header -->
+        <div class="tool-header">
+            <h1 class="tool-title">Timer & Stopwatch</h1>
+            <p class="tool-subtitle">
+                Track time precisely with a countdown timer or stopwatch. Perfect for productivity, workouts, or any time-tracking needs.
+            </p>
+        </div>
+
+        <!-- Mode Switcher -->
+        <div class="mode-switcher">
+            <button class="mode-btn active" data-mode="stopwatch">
+                <i class="fas fa-stopwatch"></i>
+                Stopwatch
+            </button>
+            <button class="mode-btn" data-mode="timer">
+                <i class="fas fa-clock"></i>
+                Timer
+            </button>
+        </div>
+
+        <!-- Stopwatch Section -->
+        <div class="stopwatch-section active">
+            <div class="display-container">
+                <svg class="progress-ring">
+                    <circle cx="150" cy="150" r="140"></circle>
+                </svg>
+                <div class="time-display" id="stopwatch-display">00:00:00</div>
+                <div class="controls">
+                    <button class="btn btn-primary" id="stopwatch-start">
+                        <i class="fas fa-play"></i>
+                        Start
+                    </button>
+                    <button class="btn btn-secondary" id="stopwatch-lap" disabled>
+                        <i class="fas fa-flag"></i>
+                        Lap
+                    </button>
+                    <button class="btn btn-danger" id="stopwatch-reset">
+                        <i class="fas fa-redo"></i>
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <div class="laps-container" id="laps-container" style="display: none;">
+                <div class="laps-header">
+                    <h3>
+                        <i class="fas fa-list"></i>
+                        Lap Times
+                    </h3>
+                    <button class="clear-laps-btn" id="clear-laps">
+                        <i class="fas fa-trash"></i> Clear All
+                    </button>
+                </div>
+                <div class="laps-list" id="laps-list">
+                    <div class="empty-laps">No laps recorded yet</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timer Section -->
+        <div class="timer-section">
+            <div class="display-container">
+                <svg class="progress-ring" id="timer-ring">
+                    <circle cx="150" cy="150" r="140"></circle>
+                </svg>
+                <div class="time-display" id="timer-display">00:00:00</div>
+                <div class="timer-inputs">
+                    <div class="timer-input-group">
+                        <label for="hours">Hours</label>
+                        <input type="number" id="hours" min="0" max="23" value="0">
+                    </div>
+                    <div class="timer-input-group">
+                        <label for="minutes">Minutes</label>
+                        <input type="number" id="minutes" min="0" max="59" value="0">
+                    </div>
+                    <div class="timer-input-group">
+                        <label for="seconds">Seconds</label>
+                        <input type="number" id="seconds" min="0" max="59" value="0">
+                    </div>
+                </div>
+                <div class="controls">
+                    <button class="btn btn-primary" id="timer-start">
+                        <i class="fas fa-play"></i>
+                        Start
+                    </button>
+                    <button class="btn btn-danger" id="timer-reset">
+                        <i class="fas fa-redo"></i>
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
